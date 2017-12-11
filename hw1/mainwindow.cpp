@@ -55,17 +55,17 @@ void MainWindow::on_processBtn_clicked()
 
     QVector<cv::Mat> images;
     foreach(const QString & name,m_imageNames){
-        cv::Mat image = cv::imread(name.toStdString());
-        if(image.empty() == true){
-            QMessageBox::critical(this,QStringLiteral("Error"),tr("%1 can not be read").arg(name),QMessageBox::Ok,QMessageBox::Ok);
-        }
-        images.push_back(image);
+//        cv::Mat image = cv::imread(name.toStdString(),-1);
+//        if(image.empty() == true){
+//            QMessageBox::critical(this,QStringLiteral("Error"),tr("%1 can not be read").arg(name),QMessageBox::Ok,QMessageBox::Ok);
+//        }
+//        images.push_back(image);
     }
 
 
 
     //Resize Images
-    QVector<cv::Mat> images;
+    QVector<cv::Mat> resizeImages;
 
 }
 

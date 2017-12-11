@@ -26,6 +26,16 @@ win32{
 INCLUDEPATH+=C:\opencv\build\include
 LIBS+= -L"C:\opencv\build\x64\vc14\lib" -lopencv_world331
 }
+unix{
+INCLUDEPATH += /usr/local/cellar/opencv/3.3.1_1/include
+LIBS += -L"/usr/local/cellar/opencv/3.3.1_1/lib" \
+#-lopencv_highgui \
+-lopencv_videoio \
+-lopencv_video \
+-lopencv_imgproc \
+-lopencv_core \
+-lopencv_photo
+}
 
 SOURCES += \
         main.cpp \
