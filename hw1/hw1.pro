@@ -10,6 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = hw1
 TEMPLATE = app
+CONFIG+= c++11
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
@@ -25,6 +26,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 win32{
 INCLUDEPATH+=C:\opencv\build\include
 LIBS+= -L"C:\opencv\build\x64\vc14\lib" -lopencv_world331
+}
+unix{
+INCLUDEPATH += /usr/local/cellar/opencv/3.3.1_1/include
+LIBS += -L"/usr/local/cellar/opencv/3.3.1_1/lib" \
+-lopencv_highgui \
+-lopencv_videoio \
+-lopencv_video \
+-lopencv_imgproc \
+-lopencv_core \
+-lopencv_photo
 }
 
 SOURCES += \
