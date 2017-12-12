@@ -35,7 +35,9 @@ LIBS += -L"/usr/local/cellar/opencv/3.3.1_1/lib" \
 -lopencv_video \
 -lopencv_imgproc \
 -lopencv_core \
--lopencv_photo
+-lopencv_photo \
+-lopencv_imgcodecs \
+-lopencv_line_descriptor
 }
 
 SOURCES += \
