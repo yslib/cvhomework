@@ -94,8 +94,8 @@ void effect(cv::VideoWriter & writer,
     }else if(style == SlideStyle::Prologue){
         qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
         //image.copySize(image1);
-        //image1.copyTo(image);
-        image = cv::Mat(frameWidth,frameHeight,CV_8UC3,);
+        image1.copyTo(image);
+        //image = cv::Mat(frameWidth,frameHeight,CV_8UC3);
         for(int i=0;i<frameCount;i++){
 
             cv::line(image,
@@ -106,12 +106,12 @@ void effect(cv::VideoWriter & writer,
                      );
             cv::rectangle(image,
                           cv::Rect(qrand()%width,qrand()%height,qrand()%width,qrand()%height),
-                          cv::Scalar(qrand()%255,qrand()%255,qrand()%255),
+                          cv::Scalar(qrand()%256,qrand()%256,qrand()%256),
                           qrand()%5
                           );
             cv::ellipse(image,
                         cv::RotatedRect(cv::Point2f(qrand()%width,qrand()%height),cv::Size2f(qrand()%width,qrand()%height),qrand()),
-                        cv::Scalar(qrand()%255,qrand()%255,qrand()%255)
+                        cv::Scalar(qrand()%256,qrand()%256,qrand()%256)
                         );
             writer<<image;
         }
