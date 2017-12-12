@@ -65,7 +65,7 @@ void MainWindow::on_processBtn_clicked()
 
 
     //Resize Images
-    QVector<cv::Mat> images;
+    //QVector<cv::Mat> images;
 
 }
 
