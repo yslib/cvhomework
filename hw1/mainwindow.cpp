@@ -13,8 +13,6 @@
 
 enum class SlideStyle{GaussianBlur,Gradient,Scan,Shrink,Mix,Prologue};
 
-
-
 /*
  *  Parameters in this function depend on what the style is.
  *  If parameter style = SlideStyle::Scan or style == SlideStyle::Shrink ,
@@ -92,29 +90,57 @@ void effect(cv::VideoWriter & writer,
             writer<<image;
         }
     }else if(style == SlideStyle::Prologue){
+        QVector<std::string> captions;
+        captions.push_back("DIRECTOR&EDITOR");
+        captions.push_back("YSL");
         qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
-        //image.copySize(image1);
-        image1.copyTo(image);
-        //image = cv::Mat(frameWidth,frameHeight,CV_8UC3);
-        for(int i=0;i<frameCount;i++){
 
-            cv::line(image,
-                     cv::Point(qrand()%width,qrand()%height),
-                     cv::Point(qrand()%width,qrand()%height),
-                     cv::Scalar(qrand()%256,qrand()%256,qrand()%256),
-                     qrand()%5
-                     );
-            cv::rectangle(image,
-                          cv::Rect(qrand()%width,qrand()%height,qrand()%width,qrand()%height),
-                          cv::Scalar(qrand()%256,qrand()%256,qrand()%256),
-                          qrand()%5
-                          );
-            cv::ellipse(image,
-                        cv::RotatedRect(cv::Point2f(qrand()%width,qrand()%height),cv::Size2f(qrand()%width,qrand()%height),qrand()),
-                        cv::Scalar(qrand()%256,qrand()%256,qrand()%256)
-                        );
-            writer<<image;
+        cv::Mat image(frameHeight,frameWidth,CV_8UC3,cv::Scalar(255,255,255));
+        cv::Mat captionImage(frameHeight,frameWidth,CV_8UC3,cv::Scalar(255,255,255));
+
+        //Font Settings
+        int fontFace = cv::FONT_HERSHEY_DUPLEX;
+        int thickness = 10;
+        cv::Scalar fontColor = cv::Scalar(0,0,0);
+
+        for(const std::string & caption:captions){
+            for(int i=0;i<frameCount;i++){
+                double fontScale = 5+0.1*std::exp(i*0.1);
+                cv::Size textSize = cv::getTextSize(caption,fontFace,fontScale,thickness,nullptr);
+                captionImage = cv::Scalar(255,255,255);
+                //image = cv::Scalar(255,255,255);
+                cv::putText(captionImage,caption,cv::Point(frameWidth/2-textSize.width/2,frameHeight/2+textSize.height/2),fontFace,fontScale,fontColor,thickness,CV_AA);
+                double alpha = static_cast<double>((frameCount-i))/static_cast<double>(frameCount);
+                cv::addWeighted(captionImage,
+                                alpha,
+                                image,
+                                1.0-alpha,
+                                0.0,
+                                image);
+                writer<<image;
+            }
         }
+
+
+//        for(int i=0;i<frameCount;i++){
+
+//            cv::line(image,
+//                     cv::Point(qrand()%width,qrand()%height),
+//                     cv::Point(qrand()%width,qrand()%height),
+//                     cv::Scalar(qrand()%256,qrand()%256,qrand()%256),
+//                     qrand()%5
+//                     );
+//            cv::rectangle(image,
+//                          cv::Rect(qrand()%width,qrand()%height,qrand()%width,qrand()%height),
+//                          cv::Scalar(qrand()%256,qrand()%256,qrand()%256),
+//                          qrand()%5
+//                          );
+//            cv::ellipse(image,
+//                        cv::RotatedRect(cv::Point2f(qrand()%width,qrand()%height),cv::Size2f(qrand()%width,qrand()%height),qrand()),
+//                        cv::Scalar(qrand()%256,qrand()%256,qrand()%256)
+//                        );
+//            writer<<image;
+//        }
 
     }
 }
@@ -225,7 +251,7 @@ void MainWindow::on_processBtn_clicked()
     }
 
     //Add a prologue
-    effect(writer,images[0],images[1],frameWidth,frameHeight,frames,SlideStyle::Prologue);
+    effect(writer,cv::Mat(),cv::Mat(),frameWidth,frameHeight,frames,SlideStyle::Prologue);
 
 
     assert(styles.empty() == false);
