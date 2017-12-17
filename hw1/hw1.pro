@@ -24,10 +24,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 win32{
+#win32
 INCLUDEPATH+=C:\opencv\build\include
 LIBS+= -L"C:\opencv\build\x64\vc14\lib" -lopencv_world331
 }
 unix{
+#mac
 INCLUDEPATH += /usr/local/cellar/opencv/3.3.1_1/include
 LIBS += -L"/usr/local/cellar/opencv/3.3.1_1/lib" \
 -lopencv_highgui \

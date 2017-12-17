@@ -108,7 +108,7 @@ void effect(cv::VideoWriter & writer,
                 double fontScale = 5+0.1*std::exp(i*0.1);
                 cv::Size textSize = cv::getTextSize(caption,fontFace,fontScale,thickness,nullptr);
                 captionImage = cv::Scalar(255,255,255);
-                //image = cv::Scalar(255,255,255);
+                image = cv::Scalar(255,255,255);
                 cv::putText(captionImage,caption,cv::Point(frameWidth/2-textSize.width/2,frameHeight/2+textSize.height/2),fontFace,fontScale,fontColor,thickness,CV_AA);
                 double alpha = static_cast<double>((frameCount-i))/static_cast<double>(frameCount);
                 cv::addWeighted(captionImage,
